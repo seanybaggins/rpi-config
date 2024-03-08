@@ -23,7 +23,7 @@
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
 
-    #inputs.hardware.outputs.nixosModules.raspberry-pi-4
+    inputs.hardware.outputs.nixosModules.raspberry-pi-4
   ];
 
   nixpkgs = {
@@ -65,7 +65,6 @@
       value.source = value.flake;
     })
     config.nix.registry;
-
   nix.settings = {
     # Enable flakes and new 'nix' command
     experimental-features = "nix-command flakes";
@@ -74,12 +73,19 @@
   };
 
   # FIXME: Add the rest of your current configuration
+  environment.systemPackages = with pkgs; [
+    vim
+    #tor-browser
+    git
+  ];  
+  services.plex.enable = true;
 
   # TODO: Set your hostname
   networking.hostName = "sean-rpi";
 
   # TODO: This is just an example, be sure to use whatever bootloader you prefer
-  boot.loader.systemd-boot.enable = true;
+  #boot.loader.systemd-boot.enable = true;
+  boot.loader.raspberryPi.version = 4;
 
   # TODO: Configure your system-wide user settings (groups, etc), add more users as needed.
   users.users = {
