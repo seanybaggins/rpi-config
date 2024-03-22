@@ -84,8 +84,11 @@
   networking.hostName = "sean-rpi";
 
   # TODO: This is just an example, be sure to use whatever bootloader you prefer
-  #boot.loader.systemd-boot.enable = true;
-  boot.loader.raspberryPi.version = 4;
+  boot.loader.generic-extlinux-compatible.enable = false;
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.initrd.availableKernelModules = [ "usbhid" "usb_storage" "uas" ];
+  #boot.loader.raspberryPi.version = 4;
 
   # TODO: Configure your system-wide user settings (groups, etc), add more users as needed.
   users.users = {
@@ -94,7 +97,7 @@
       # TODO: You can set an initial password for your user.
       # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
       # Be sure to change it (using passwd) after rebooting!
-      initialPassword = "changeMe";
+      #initialPassword = "changeMe";
       isNormalUser = true;
       openssh.authorizedKeys.keys = [
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
@@ -103,6 +106,8 @@
       extraGroups = ["wheel"];
     };
   };
+
+  networking.networkmanager.enable = true;
 
   # This setups a SSH server. Very important if you're setting up a headless system.
   # Feel free to remove if you don't need it.
