@@ -12,6 +12,16 @@
       ./hardware-configuration.nix
     ];
 
+  services.netdata = {
+    enable = true;
+    config.global = {
+      "memory mode" = "ram";
+      "debug log" = "none";
+      "access log" = "none";
+      "error log" = "syslog";
+    };
+  };
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
